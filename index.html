@@ -26,14 +26,9 @@ body{
   color:var(--text);
   padding:.75rem .75rem 1.5rem;
   overflow-x:auto;
+  height:fit-content;
 }
-body::before{
-  content:'';position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 70% 50% at 15% 10%,rgba(124,111,224,0.04) 0%,transparent 60%),
-    radial-gradient(ellipse 50% 40% at 85% 85%,rgba(14,165,233,0.03) 0%,transparent 60%);
-  pointer-events:none;
-}
+
 
 
 /* ── HEADER ── */
