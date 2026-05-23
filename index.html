@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organograma TI</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --card: rgba(13,25,65,0.82);
+  --card-hover: rgba(20,35,85,0.88);
+  --border: rgba(99,140,220,0.3);
+  --line: rgba(99,130,200,0.38);
+  --purple: #7c6fe0;
+  --teal: #0ea5e9;
+  --green: #059669;
+  --text: #1e293b;
+  --muted: #64748b;
+  --dim: #94a3b8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  font-family:'IBM Plex Sans',sans-serif;
+  color:var(--text);
+  padding:3rem 1rem 6rem;
+  overflow-x:auto;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 10%,rgba(124,111,224,0.04) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 85%,rgba(14,165,233,0.03) 0%,transparent 60%);
+  pointer-events:none;
+}
+.grid-bg{
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,0,0,0.025) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+}
+
+/* ── HEADER ── */
+header{text-align:center;margin-bottom:3rem}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;opacity:.8}
+h1{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:clamp(1.6rem,3.5vw,2.4rem);
+  font-weight:700;
+  letter-spacing:-.01em;
+  color:#0f172a;
+}
+h1 span{color:#4f46e5}
+.kpis{display:flex;justify-content:center;gap:8px;margin-top:1rem;flex-wrap:wrap}
+.kpi{
+  background:rgba(0,0,0,0.04);
+  border:0.5px solid rgba(0,0,0,0.1);
+  border-radius:100px;padding:.28rem .85rem;
+  font-size:13px;color:#475569;
+  display:flex;align-items:center;gap:5px;
+  white-space:nowrap;
+}
+.kpi strong{color:#1e293b;font-weight:600}
+.dot6{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* ── TREE ── */
+.tree{display:flex;flex-direction:column;align-items:center;min-width:900px;width:max-content;margin:0 auto}
+
+.vc{width:1.5px;background:var(--line);flex-shrink:0;align-self:center}
+
+.hrow{display:flex;flex-direction:row;align-items:flex-start;justify-content:center;position:relative}
+.hrow::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:var(--line)}
+
+.bcol{display:flex;flex-direction:column;align-items:center;position:relative}
+.bcol::before{content:'';position:absolute;top:0;left:50%;width:2.5px;height:20px;background:var(--line)}
+.bcol.tight::before{display:none}
+.bcol.tight{padding-top:0!important}
+.mlist.snap{margin-top:2px}
+
+/* ── NODE CARD ── */
+.node{
+  background:var(--card);
+  border:0.5px solid var(--border);
+  border-radius:10px;
+  padding:.55rem .9rem;
+  text-align:center;
+  position:relative;
+  width:120px;
+  transition:border-color .2s,background .2s;
+  cursor:default;
+}
+.node:hover{background:var(--card-hover);border-color:rgba(124,111,224,0.5)}
+
+.node .n{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:13px;font-weight:600;
+  color:#ffffff;
+  white-space:normal;
+  line-height:1.3;
+}
+.node .r{
+  font-size:10px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  margin-top:4px;padding:2px 8px;
+  border-radius:100px;display:inline-block;
+  white-space:nowrap;
+}
+
+/* accent lines */
+.np::before{content:'';position:absolute;top:-0.5px;left:15%;right:15%;height:3px;background:var(--purple);border-radius:0 0 3px 3px}
+.nt::before{content:'';position:absolute;top:-0.5px;left:15%;right:15%;height:3px;background:#1ab8f5;border-radius:0 0 3px 3px}
+.ng::before{content:'';position:absolute;top:-0.5px;left:15%;right:15%;height:3px;background:#06b077;border-radius:0 0 3px 3px}
+
+.rp{background:rgba(124,111,224,0.25);color:#c4baff}
+.rt{background:rgba(56,189,248,0.28);color:#93d9fd}
+.rg{background:rgba(52,211,153,0.28);color:#86efcb}
+
+/* ── MEMBER LIST ── */
+.mlist{
+  background:rgba(13,25,65,0.78);
+  border:0.5px solid rgba(99,140,220,0.22);
+  border-radius:8px;padding:.45rem .65rem;
+  width:120px;text-align:center;
+}
+.mlist-title{
+  font-size:9px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:#94a3b8;margin-bottom:4px;
+}
+.mlist ul{list-style:none;padding:0}
+.mlist ul li{
+  font-size:12px;color:#ffffff;
+  padding:2px 0;
+  border-bottom:0.5px solid rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  line-height:1.3;
+}
+.mlist ul li:last-child{border-bottom:none}
+.mlist ul li::before{display:none}
+.mlist ul li:hover{color:#e2e8f0}
+
+/* gaps */
+.g16{height:16px}.g20{height:20px}.g24{height:24px}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<header>
+</header>
+
+<div class="tree">
+
+  <!-- TI ROOT -->
+  <div style="display:flex;width:100%;">
+    <div id="ti-card-wrap" style="flex:5.0;">
+      <div class="node" style="width:100%;max-width:100%;">
+        <div class="n">TI (55)</div>
+      </div>
+    </div>
+    <div style="flex:0.5;"></div>
+  </div>
+  <div class="vc g24"></div>
+
+  <!-- LEVEL 1 -->
+  <div class="hrow" style="gap:0;padding-top:20px;width:100%">
+
+    <!-- GESTÃO OPUS -->
+    <div class="bcol" style="flex:1;padding:0 16px">
+      <div class="vc g20"></div>
+      <div class="node np">
+        <div class="n">Gestão Opus</div>
+        <div class="r rp">8 pessoas</div>
+        <div style="font-size:10px;color:#a89cf0;margin-top:3px;font-weight:500">Marcelo</div>
+      </div>
+      <div class="vc g16"></div>
+      <div class="mlist">
+        <div class="mlist-title">Membros</div>
+        <ul>
+          <li>Vitória</li><li>*João</li>
+          <li>*Fernando</li><li>Bruno</li><li>Sergio</li>
+          <li>Malu</li><li>Massao</li><li>Gabriela</li>
+        </ul>
+      </div>
+      <div style="margin-top:6px;width:120px;padding:0 2px">
+        <span style="font-size:10px;color:#000000 !important;line-height:1.2;font-weight:500;">* Recursos AE atuando na Squad Opus</span>
+      </div>
+    </div>
+
+    <!-- JARA -->
+    <div class="bcol" style="flex:3;padding:0 16px">
+      <div class="vc g20"></div>
+      <div class="node nt">
+        <div class="n">Jara</div>
+        <div class="r rt">31 pessoas</div>
+      </div>
+      <div class="vc g20"></div>
+
+      <div class="hrow" style="gap:0;padding-top:20px;width:100%">
+
+        <!-- Sinal + Trademate + Back/Web coluna vertical -->
+        <div class="bcol" style="flex:1;padding:0 10px">
+          <div class="vc g20"></div>
+          <div class="node nt">
+            <div class="n">Sinal</div>
+            <div class="r rt">2 pessoas</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="mlist">
+            <div class="mlist-title">Membros</div>
+            <ul><li>Marcos</li><li>Youiti</li></ul>
+          </div>
+
+          <div style="height:20px"></div>
+
+          <div class="node nt">
+            <div class="n">Trademate</div>
+            <div class="r rt">2 pessoas</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="mlist">
+            <div class="mlist-title">Membros</div>
+            <ul><li>Luanna</li><li>Daniel</li></ul>
+          </div>
+
+          <div style="height:20px"></div>
+
+          <div class="node nt">
+            <div class="n">Back/Web</div>
+            <div class="r rt">3 pessoas</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="mlist">
+            <div class="mlist-title">Membros</div>
+            <ul><li>Tonza</li><li>Monica</li><li>Wallace</li></ul>
+          </div>
+        </div>
+
+        <!-- Wagner -->
+        <div class="bcol" style="flex:1.5;padding:0 10px">
+          <div class="vc g20"></div>
+          <div class="node nt">
+            <div class="n">Desenv</div>
+            <div class="r rt">10 pessoas</div>
+            <div style="font-size:10px;color:#93d9fd;margin-top:3px;font-weight:500">Wagner</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="hrow" style="gap:0;padding-top:20px;width:100%">
+            <div class="bcol" style="flex:1;padding:0 6px">
+              <div class="vc g20"></div>
+              <div class="node nt">
+                <div class="n">Latam</div>
+                <div class="r rt">2 pessoas</div>
+              </div>
+              <div class="vc g16"></div>
+              <div class="mlist">
+                <div class="mlist-title">Membros</div>
+                <ul><li>Masao</li><li>Hugo</li></ul>
+              </div>
+            </div>
+            <div class="bcol" style="flex:1;padding:0 6px">
+              <div class="vc g20"></div>
+              <div class="node nt">
+                <div class="n">Novo Terminal</div>
+                <div class="r rt">8 pessoas</div>
+              </div>
+              <div class="vc g16"></div>
+              <div class="mlist">
+                <div class="mlist-title">Membros</div>
+                <ul><li>Leandro</li><li>Lele</li><li>Rafael</li><li>Jesus</li><li>Trida</li><li>Ruan</li><li>Jhonathan</li><li>Gabriel</li></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tapia -->
+        <div class="bcol" style="flex:1.5;padding:0 10px">
+          <div class="vc g20"></div>
+          <div class="node nt">
+            <div class="n">Desenv</div>
+            <div class="r rt">10 pessoas</div>
+            <div style="font-size:10px;color:#93d9fd;margin-top:3px;font-weight:500">Tapia</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="hrow" style="gap:0;padding-top:20px;width:100%">
+            <div class="bcol" style="flex:1;padding:0 6px">
+              <div class="vc g20"></div>
+              <div class="node nt">
+                <div class="n">Sistemas Internos</div>
+                <div class="r rt">2 pessoas</div>
+              </div>
+              <div class="vc g16"></div>
+              <div class="mlist">
+                <div class="mlist-title">Membros</div>
+                <ul><li>Minighiti</li><li>Baraldi</li></ul>
+              </div>
+            </div>
+            <div class="bcol" style="flex:1;padding:0 6px">
+              <div class="vc g20"></div>
+              <div class="node nt">
+                <div class="n">Manutenção</div>
+                <div class="r rt">8 pessoas</div>
+              </div>
+              <div class="vc g16"></div>
+              <div class="mlist">
+                <div class="mlist-title">Membros</div>
+                <ul><li>Rose</li><li>Claudiomar</li><li>Gabriel</li><li>Ricardo</li><li>Marcelo</li><li>Alessandro</li><li>Carlos</li><li>Lucas</li></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- REYNALDO -->
+    <div class="bcol" style="flex:1.5;padding:0 16px">
+      <div class="vc g20"></div>
+      <div class="node ng">
+        <div class="n">Reynaldo</div>
+        <div class="r rg">24 pessoas</div>
+      </div>
+      <div class="vc g20"></div>
+
+      <div class="hrow" style="gap:0;padding-top:20px;width:100%">
+
+        <!-- Produção -->
+        <div class="bcol" style="flex:1;padding:0 8px">
+          <div class="vc g20"></div>
+          <div class="node ng">
+            <div class="n">Produção</div>
+            <div class="r rg">14 pessoas</div>
+            <div style="font-size:10px;color:#6ee7b7;margin-top:3px;font-weight:500">Marcelo</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="hrow" style="gap:0;padding-top:20px;width:100%">
+            <div class="bcol" style="flex:1;padding:0 5px">
+              <div class="vc g20"></div>
+              <div class="node ng">
+                <div class="n">24x7</div>
+                <div class="r rg">6 pessoas</div>
+              </div>
+              <div class="vc g16"></div>
+              <div class="mlist">
+                <div class="mlist-title">Membros</div>
+                <ul><li>Julia</li><li>Florio</li><li>Marcos</li><li>Carol</li><li>Ruas</li><li>Elvis</li></ul>
+              </div>
+            </div>
+            <div class="bcol" style="flex:1;padding:0 5px">
+              <div class="vc g20"></div>
+              <div class="node ng">
+                <div class="n">Núcleos</div>
+                <div class="r rg">3 pessoas</div>
+              </div>
+              <div class="vc g16"></div>
+              <div class="mlist">
+                <div class="mlist-title">Membros</div>
+                <ul><li>Lucas</li><li>Kelly</li><li>Wesley</li></ul>
+              </div>
+              <div style="height:16px"></div>
+              <div class="node ng">
+                <div class="n">Atend. Téc.</div>
+                <div class="r rg">4 pessoas</div>
+              </div>
+              <div class="mlist" style="margin-top:4px">
+                <div class="mlist-title">Membros</div>
+                <ul><li>Flavio</li><li>Rauan</li><li>Dario</li><li>Fabio</li></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Infraestrutura -->
+        <div class="bcol" style="flex:1;padding:0 8px">
+          <div class="vc g20"></div>
+          <div class="node ng">
+            <div class="n">Infraestrutura</div>
+            <div class="r rg">8 pessoas</div>
+            <div style="font-size:10px;color:#6ee7b7;margin-top:3px;font-weight:500">Fabio</div>
+          </div>
+          <div class="vc g16"></div>
+
+          <!-- Sistemas -->
+          <div class="node ng">
+            <div class="n">Sistemas</div>
+            <div class="r rg">2 pessoas</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="mlist">
+            <div class="mlist-title">Membros</div>
+            <ul><li>Leonardo</li><li>André</li></ul>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <!-- Segurança -->
+          <div class="node ng">
+            <div class="n">Segurança</div>
+            <div class="r rg">1 pessoa</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="mlist">
+            <div class="mlist-title">Membros</div>
+            <ul><li>Reginaldo</li></ul>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <!-- Telecom -->
+          <div class="node ng">
+            <div class="n">Telecom</div>
+            <div class="r rg">1 pessoa</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="mlist">
+            <div class="mlist-title">Membros</div>
+            <ul><li>Andreza</li></ul>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <!-- Infra -->
+          <div class="node ng">
+            <div class="n">Infra</div>
+            <div class="r rg">2 pessoas</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="mlist">
+            <div class="mlist-title">Membros</div>
+            <ul><li>Gilmar</li><li>Alexandre</li></ul>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <!-- Redes -->
+          <div class="node ng">
+            <div class="n">Redes</div>
+            <div class="r rg">2 pessoas</div>
+          </div>
+          <div class="vc g16"></div>
+          <div class="mlist">
+            <div class="mlist-title">Membros</div>
+            <ul><li>Daniel</li><li>Anderson</li></ul>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display:flex;width:100%;margin-top:8px;">
+    <div style="flex:4.83;">
+      <div style="background:rgba(13,25,65,0.82);border:0.5px solid rgba(99,140,220,0.3);border-radius:10px;padding:.65rem 1.25rem;position:relative;width:100%;">
+        <div style="position:absolute;top:-0.5px;left:15%;right:15%;height:3px;background:#1ab8f5;border-radius:0 0 3px 3px;"></div>
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:600;color:#fff;">QA</span>
+        <span style="width:1px;height:16px;background:rgba(255,255,255,0.1);display:inline-block;vertical-align:middle;margin:0 10px;"></span>
+        <span style="font-size:12px;color:#ffffff;">Ricardo Matos</span>
+      </div>
+    </div>
+    <div style="flex:0.67;"></div>
+  </div>
+
+  <div style="display:flex;width:100%;margin-top:8px;">
+    <div id="processos-card-wrap" style="flex:4.8;">
+      <div style="background:rgba(13,25,65,0.82);border:0.5px solid rgba(99,140,220,0.3);border-radius:10px;padding:.65rem 1.25rem;position:relative;width:100%;">
+        <div style="position:absolute;top:-0.5px;left:15%;right:15%;height:3px;background:#06b077;border-radius:0 0 3px 3px;"></div>
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:600;color:#fff;">Processos ITSM / Agile Master / Projetos / BI / Jira</span>
+        <span style="width:1px;height:16px;background:rgba(255,255,255,0.1);display:inline-block;vertical-align:middle;margin:0 10px;"></span>
+        <span style="font-size:12px;color:#ffffff;">Natan (líder)</span>
+        <span style="font-size:12px;color:#ffffff;margin-left:8px;">Paloma</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:100%;height:2.5px;background:var(--line);margin-top:8px;"></div>
+
+</div>
+
+<script>
+window.addEventListener('load', function() {
+  var processos = document.getElementById('processos-card-wrap');
+  var ti = document.getElementById('ti-card-wrap');
+  if (processos && ti) {
+    var w = processos.getBoundingClientRect().width;
+    ti.style.flex = 'none';
+    ti.style.width = w + 'px';
+  }
+});
+</script>
+
+</body>
+</html>
