@@ -470,7 +470,7 @@ h1 span{color:#4f46e5}
 </div>
 
 <script>
-window.addEventListener('load', function() {
+function aplicarEscala() {
   var processos = document.getElementById('processos-card-wrap');
   var ti = document.getElementById('ti-card-wrap');
   if (processos && ti) {
@@ -479,19 +479,40 @@ window.addEventListener('load', function() {
     ti.style.width = w + 'px';
   }
 
-  // Auto-escala para caber na largura da tela
+  // Reset antes de recalcular
   var tree = document.querySelector('.tree');
   if (tree) {
-    var escala = (window.innerWidth - 16) / tree.scrollWidth;
+    tree.style.transform = '';
+    tree.style.marginBottom = '';
+    document.body.style.height = '';
+    document.documentElement.style.height = '';
+
+    var larguraDisponivel = document.documentElement.clientWidth - 16;
+    var larguraTree = tree.scrollWidth;
+    var escala = larguraDisponivel / larguraTree;
+
     if (escala < 1) {
+      var alturaOriginal = tree.scrollHeight;
+      var alturaEscalada = Math.ceil(alturaOriginal * escala);
+
       tree.style.transformOrigin = 'top left';
       tree.style.transform = 'scale(' + escala + ')';
-      tree.style.marginBottom = '-' + (tree.scrollHeight * (1 - escala)) + 'px';
-      document.body.style.height = (tree.scrollHeight * escala + 32) + 'px';
-      document.documentElement.style.height = (tree.scrollHeight * escala + 32) + 'px';
+      tree.style.marginBottom = '-' + (alturaOriginal - alturaEscalada) + 'px';
+
+      var alturaTotal = alturaEscalada + 32;
+      document.body.style.height = alturaTotal + 'px';
+      document.documentElement.style.height = alturaTotal + 'px';
+
+      // Notifica o iframe pai da altura real
+      if (window.parent !== window) {
+        window.parent.postMessage({ iframeHeight: alturaTotal }, '*');
+      }
     }
   }
-});
+}
+
+window.addEventListener('load', aplicarEscala);
+window.addEventListener('resize', aplicarEscala);
 </script>
 
 </body>
